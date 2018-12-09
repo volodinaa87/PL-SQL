@@ -24,3 +24,19 @@ begin
 end;
 /
 delete from retired_employees;
+
+------------------------------------------
+
+declare 
+    r_emp employees%rowtype;
+    v_employee_id PLS_INTEGER :=104;
+    v_salary PLS_INTEGER not null default 9000;
+    v_commission_pct PLS_INTEGER not null default 0;
+begin 
+    select * into r_emp from employees where employee_id=v_employee_id;
+    r_emp.salary :=v_salary;
+    r_emp.commission_pct :=v_commission_pct;
+    --insert into retired_employees values r_emp;
+    update retired_employees
+    set row = r_emp where employee_id=v_employee_id;
+end;
